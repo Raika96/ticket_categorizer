@@ -10,11 +10,7 @@ import torch
 import argparse
 from transformers import DistilBertForSequenceClassification, DistilBertTokenizer
 
-# ============================================================================
-# CONFIGURATION: Replace with your Hugging Face username/model-name
-# ============================================================================
 DEFAULT_MODEL_NAME = 'raika96/ticket_cat_bert'
-# ============================================================================
 
 
 class HuggingFaceTicketClassifier:

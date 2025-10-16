@@ -50,7 +50,7 @@ os.chdir(project_root)
 from load_secrets import load_secrets, setup_environment, check_secrets
 
 
-def print_section(title, emoji="🔧"):
+def print_section(title, emoji=""):
     """Print a formatted section header"""
     print("\n" + "="*100)
     print(f" {emoji} {title}")
@@ -59,7 +59,7 @@ def print_section(title, emoji="🔧"):
 
 def run_command(cmd, description, check=True):
     """Run a shell command and handle errors"""
-    print(f"⚙️  {description}...")
+    print(f"  {description}...")
     try:
         result = subprocess.run(
             cmd,
@@ -69,17 +69,17 @@ def run_command(cmd, description, check=True):
             text=True
         )
         if result.returncode == 0:
-            print(f"✅ {description} - Success!")
+            print(f" {description} - Success!")
             if result.stdout.strip():
                 print(result.stdout)
             return True
         else:
-            print(f"❌ {description} - Failed!")
+            print(f" {description} - Failed!")
             if result.stderr:
                 print(f"Error: {result.stderr}")
             return False
     except subprocess.CalledProcessError as e:
-        print(f"❌ {description} - Failed with error:")
+        print(f" {description} - Failed with error:")
         print(e.stderr)
         return False
 
@@ -88,8 +88,8 @@ def check_kaggle_credentials():
     """Check if Kaggle credentials are configured"""
     kaggle_json = Path.home() / '.kaggle' / 'kaggle.json'
     if not kaggle_json.exists():
-        print("❌ Kaggle credentials not found!")
-        print("\n📋 To set up Kaggle API:")
+        print(" Kaggle credentials not found!")
+        print("\n To set up Kaggle API:")
         print("   1. Go to https://www.kaggle.com/account")
         print("   2. Click 'Create New API Token'")
         print("   3. Move kaggle.json to ~/.kaggle/")
@@ -101,11 +101,11 @@ def check_kaggle_credentials():
 
 def download_kaggle_data():
     """Download IT Service dataset from Kaggle"""
-    print_section("Step 1: Download IT Service Tickets from Kaggle", "📥")
+    print_section("Step 1: Download IT Service Tickets from Kaggle", "")
     
     # Check credentials
     if not check_kaggle_credentials():
-        print("\n⚠️  Skipping download. Please set up Kaggle credentials first.")
+        print("\n  Skipping download. Please set up Kaggle credentials first.")
         return False
     
     # Create data directory
@@ -119,24 +119,24 @@ def download_kaggle_data():
     )
     
     if not success:
-        print("\n❌ Download failed. Dataset might already exist or credentials are invalid.")
+        print("\n Download failed. Dataset might already exist or credentials are invalid.")
         return False
     
-    print(f"\n✅ Dataset downloaded to: data/external/")
+    print(f"\n Dataset downloaded to: data/external/")
     return True
 
 
 def process_it_tickets():
     """Process IT Service tickets using the processor"""
-    print_section("Step 2: Process IT Service Tickets", "🔄")
+    print_section("Step 2: Process IT Service Tickets", "")
     
     # Check if processed file already exists
     output_file = 'data/processed_it_tickets.csv'
     if os.path.exists(output_file):
-        print(f"✅ Processed tickets already exist: {output_file}")
+        print(f" Processed tickets already exist: {output_file}")
         import pandas as pd
         df = pd.read_csv(output_file)
-        print(f"   📊 {len(df):,} tickets loaded")
+        print(f"    {len(df):,} tickets loaded")
         return True
     
     # Check if raw data exists (try multiple possible filenames)
@@ -149,15 +149,15 @@ def process_it_tickets():
     for f in possible_files:
         if os.path.exists(f):
             raw_file = f
-            print(f"✅ Found raw data: {f}")
+            print(f" Found raw data: {f}")
             break
     
     if not raw_file:
-        print(f"❌ Raw data file not found. Checked:")
+        print(f" Raw data file not found. Checked:")
         for f in possible_files:
             print(f"   - {f}")
         print("\n   Make sure the Kaggle download completed successfully.")
-        print("\n💡 Alternative: If you already have processed data in data/processed/,")
+        print("\n Alternative: If you already have processed data in data/processed/,")
         print("   you can skip directly to training with that data.")
         return False
     
@@ -167,7 +167,7 @@ def process_it_tickets():
     
     if success:
         if os.path.exists(output_file):
-            print(f"\n✅ Processed tickets saved to: {output_file}")
+            print(f"\n Processed tickets saved to: {output_file}")
             return True
     
     return False
@@ -175,7 +175,7 @@ def process_it_tickets():
 
 def generate_gpt_augmentation(count_per_category=200):
     """Generate GPT augmentation for rare categories"""
-    print_section(f"Step 3: Generate GPT Augmentation ({count_per_category} per category)", "🤖")
+    print_section(f"Step 3: Generate GPT Augmentation ({count_per_category} per category)", "")
     
     # Check if GPT augmentation already exists
     output_file = 'data/synthetic_gpt_augmentation.csv'
@@ -183,28 +183,28 @@ def generate_gpt_augmentation(count_per_category=200):
         import pandas as pd
         try:
             existing_df = pd.read_csv(output_file)
-            print(f"✅ GPT augmentation already exists: {output_file}")
+            print(f" GPT augmentation already exists: {output_file}")
             print(f"   Contains {len(existing_df):,} tickets")
-            print("\n💡 Using existing GPT data (no API calls needed)")
+            print("\n Using existing GPT data (no API calls needed)")
             print("   To regenerate, delete the file and run again.")
             return True
         except Exception as e:
-            print(f"⚠️  Found {output_file} but couldn't read it: {e}")
+            print(f"  Found {output_file} but couldn't read it: {e}")
             print("   Will regenerate...")
     
     # Check for OpenAI API key
     status = check_secrets()
     if not status['openai_ok']:
-        print("❌ OpenAI API key not configured!")
-        print("\n📋 To configure:")
+        print(" OpenAI API key not configured!")
+        print("\n To configure:")
         print("   1. Copy secrets.json.example to secrets.json")
         print("   2. Add your OpenAI API key")
         print("   OR")
         print("   export OPENAI_API_KEY='your-api-key-here'")
-        print("\n⚠️  Skipping GPT augmentation.")
+        print("\n  Skipping GPT augmentation.")
         return False
     
-    print(f"✅ OpenAI API key found: {status['openai_key']}")
+    print(f" OpenAI API key found: {status['openai_key']}")
     
     # Run GPT augmentation
     cmd = f'python3 src/data_generation/augment_with_gpt.py --yes --count {count_per_category}'
@@ -212,7 +212,7 @@ def generate_gpt_augmentation(count_per_category=200):
     
     if success:
         if os.path.exists(output_file):
-            print(f"\n✅ GPT augmentation saved to: {output_file}")
+            print(f"\n GPT augmentation saved to: {output_file}")
             return True
     
     return False
@@ -226,7 +226,7 @@ def merge_and_preprocess():
     3. Add GPT augmentation ONLY to training set
     4. Save final splits
     """
-    print_section("Step 4: Process and Split Data", "🔀")
+    print_section("Step 4: Process and Split Data", "")
     
     import pandas as pd
     from src.preprocessing.text_cleaner import TextCleaner, handle_duplicates, handle_extreme_cases
@@ -235,26 +235,26 @@ def merge_and_preprocess():
     # ========== STEP 1: Load and Clean IT Tickets ==========
     it_file = 'data/processed_it_tickets.csv'
     if not os.path.exists(it_file):
-        print(f"❌ IT tickets not found: {it_file}")
+        print(f" IT tickets not found: {it_file}")
         return False
     
-    print(f"📂 Loading IT tickets from: {it_file}")
+    print(f" Loading IT tickets from: {it_file}")
     df = pd.read_csv(it_file)
-    print(f"   ✅ Loaded {len(df):,} IT tickets")
+    print(f"    Loaded {len(df):,} IT tickets")
     
     # Show initial category distribution
-    print("\n📊 Initial Category Distribution:")
+    print("\n Initial Category Distribution:")
     for category, count in df['category'].value_counts().sort_index().items():
         print(f"   {category:35} {count:6,}")
     
     # Handle duplicates in original data
-    print("\n🔄 Removing duplicates from IT tickets...")
+    print("\n Removing duplicates from IT tickets...")
     initial_count = len(df)
     df, n_duplicates = handle_duplicates(df, text_cols=['title', 'description'], keep='first')
-    print(f"   ✅ Removed {n_duplicates:,} duplicates ({initial_count:,} → {len(df):,})")
+    print(f"    Removed {n_duplicates:,} duplicates ({initial_count:,} → {len(df):,})")
     
     # Clean text
-    print("\n🧹 Cleaning text...")
+    print("\n Cleaning text...")
     cleaner = TextCleaner(min_length=10, max_length=2000, redact_pii=True)
     
     for col in ['title', 'description']:
@@ -267,10 +267,10 @@ def merge_and_preprocess():
     
     # Remove short texts
     df = df[df['text_clean'].str.len() >= 10].copy()
-    print(f"   ✅ Cleaned and filtered: {len(df):,} tickets remain")
+    print(f"    Cleaned and filtered: {len(df):,} tickets remain")
     
     # Handle extreme cases
-    print("\n📏 Handling extreme cases...")
+    print("\n Handling extreme cases...")
     df['combined_length'] = df['text_clean'].str.len()
     df, extreme_stats = handle_extreme_cases(
         df,
@@ -293,10 +293,10 @@ def merge_and_preprocess():
     }
     with open('data/processed/label_mapping.json', 'w') as f:
         json.dump(label_mapping, f, indent=2)
-    print(f"\n💾 Saved label mapping to: data/processed/label_mapping.json")
+    print(f"\n Saved label mapping to: data/processed/label_mapping.json")
     
     # ========== STEP 2: Split into Train/Val/Test ==========
-    print("\n✂️  Splitting data (70% train, 15% val, 15% test)...")
+    print("\n  Splitting data (70% train, 15% val, 15% test)...")
     
     # First split: train vs temp (test+val)
     train_df, temp_df = train_test_split(
@@ -314,21 +314,21 @@ def merge_and_preprocess():
         stratify=temp_df['category']
     )
     
-    print(f"   ✅ Train: {len(train_df):,} tickets")
-    print(f"   ✅ Val:   {len(val_df):,} tickets")
-    print(f"   ✅ Test:  {len(test_df):,} tickets")
+    print(f"    Train: {len(train_df):,} tickets")
+    print(f"    Val:   {len(val_df):,} tickets")
+    print(f"    Test:  {len(test_df):,} tickets")
     
     # ========== STEP 3: Add GPT Augmentation to TRAIN ONLY ==========
     gpt_file = 'data/synthetic_gpt_augmentation.csv'
     gpt_tickets_added = 0
     
     if os.path.exists(gpt_file):
-        print(f"\n📂 Loading GPT augmentation from: {gpt_file}")
+        print(f"\n Loading GPT augmentation from: {gpt_file}")
         gpt_df = pd.read_csv(gpt_file)
-        print(f"   ✅ Loaded {len(gpt_df):,} GPT tickets")
+        print(f"    Loaded {len(gpt_df):,} GPT tickets")
         
         # Clean GPT data
-        print("\n🧹 Cleaning GPT augmentation...")
+        print("\n Cleaning GPT augmentation...")
         for col in ['title', 'description']:
             if f'{col}_clean' not in gpt_df.columns:
                 gpt_df[f'{col}_clean'] = gpt_df[col].apply(cleaner.clean_text)
@@ -344,7 +344,7 @@ def merge_and_preprocess():
         common_cols = list(set(train_df.columns) & set(gpt_df.columns))
         
         # Add GPT data ONLY to training set
-        print(f"\n🔀 Adding GPT augmentation to TRAINING SET ONLY...")
+        print(f"\n Adding GPT augmentation to TRAINING SET ONLY...")
         print(f"   Before augmentation: {len(train_df):,} training tickets")
         train_df = pd.concat([train_df[common_cols], gpt_df[common_cols]], ignore_index=True)
         gpt_tickets_added = len(gpt_df)
@@ -353,28 +353,28 @@ def merge_and_preprocess():
         # Remove duplicates after augmentation
         train_df, n_aug_duplicates = handle_duplicates(train_df, text_cols=['title', 'description'], keep='first')
         if n_aug_duplicates > 0:
-            print(f"   ✅ Removed {n_aug_duplicates:,} duplicate augmentations")
+            print(f"    Removed {n_aug_duplicates:,} duplicate augmentations")
         
     else:
-        print(f"\n⚠️  GPT augmentation not found: {gpt_file}")
+        print(f"\n  GPT augmentation not found: {gpt_file}")
         print("   Proceeding without augmentation.")
     
     # ========== STEP 4: Show Final Statistics ==========
-    print("\n📊 FINAL DATA SPLIT:")
+    print("\n FINAL DATA SPLIT:")
     print(f"   Train: {len(train_df):,} tickets (includes {gpt_tickets_added:,} augmented)")
     print(f"   Val:   {len(val_df):,} tickets (original data only)")
     print(f"   Test:  {len(test_df):,} tickets (original data only)")
     
-    print("\n📊 Training Set Category Distribution:")
+    print("\n Training Set Category Distribution:")
     for category, count in train_df['category'].value_counts().sort_index().items():
         print(f"   {category:35} {count:6,}")
     
     # ========== STEP 5: Save Final Splits ==========
-    print("\n💾 Saving processed splits...")
+    print("\n Saving processed splits...")
     train_df.to_csv('data/processed/train.csv', index=False)
     val_df.to_csv('data/processed/val.csv', index=False)
     test_df.to_csv('data/processed/test.csv', index=False)
-    print(f"   ✅ Saved to: data/processed/")
+    print(f"    Saved to: data/processed/")
     
     # Save augmented version separately for reference
     if gpt_tickets_added > 0:
@@ -382,7 +382,7 @@ def merge_and_preprocess():
         train_df.to_csv('data/processed_augmented/train_augmented.csv', index=False)
         val_df.to_csv('data/processed_augmented/val.csv', index=False)
         test_df.to_csv('data/processed_augmented/test.csv', index=False)
-        print(f"   ✅ Also saved augmented version to: data/processed_augmented/")
+        print(f"    Also saved augmented version to: data/processed_augmented/")
     
     # Save statistics
     stats = {
@@ -405,12 +405,12 @@ def merge_and_preprocess():
     with open('data/processed/preprocessing_stats.json', 'w') as f:
         json.dump(stats, f, indent=2)
     
-    print(f"   ✅ Saved statistics to: data/processed/preprocessing_stats.json")
+    print(f"    Saved statistics to: data/processed/preprocessing_stats.json")
     
     print("\n" + "="*100)
-    print("✅ DATA PROCESSING COMPLETE!")
+    print(" DATA PROCESSING COMPLETE!")
     print("="*100)
-    print("\n📋 Key Points:")
+    print("\n Key Points:")
     print(f"   • Original Kaggle data split into train/val/test")
     print(f"   • GPT augmentation added ONLY to training set (no data leakage)")
     print(f"   • Validation and test sets remain pure/unseen")
@@ -423,30 +423,30 @@ def print_summary(args, start_time):
     """Print pipeline summary"""
     duration = time.time() - start_time
     
-    print_section("Pipeline Complete! 🎉", "✅")
+    print_section("Pipeline Complete! ", "")
     
-    print(f"⏱️  Total time: {duration:.1f} seconds ({duration/60:.1f} minutes)")
-    print("\n📁 Output files:")
-    print("   ✅ data/processed/train.csv (includes augmentation)")
-    print("   ✅ data/processed/val.csv (original data only)")
-    print("   ✅ data/processed/test.csv (original data only)")
-    print("   ✅ data/processed/label_mapping.json")
-    print("   ✅ data/processed/preprocessing_stats.json")
+    print(f"  Total time: {duration:.1f} seconds ({duration/60:.1f} minutes)")
+    print("\n Output files:")
+    print("    data/processed/train.csv (includes augmentation)")
+    print("    data/processed/val.csv (original data only)")
+    print("    data/processed/test.csv (original data only)")
+    print("    data/processed/label_mapping.json")
+    print("    data/processed/preprocessing_stats.json")
     
     if os.path.exists('data/processed_augmented/train_augmented.csv'):
-        print("\n📁 Augmented version also saved to:")
-        print("   ✅ data/processed_augmented/train_augmented.csv")
-        print("   ✅ data/processed_augmented/val.csv")
-        print("   ✅ data/processed_augmented/test.csv")
+        print("\n Augmented version also saved to:")
+        print("    data/processed_augmented/train_augmented.csv")
+        print("    data/processed_augmented/val.csv")
+        print("    data/processed_augmented/test.csv")
     
-    print("\n✨ Data Pipeline Summary:")
+    print("\n Data Pipeline Summary:")
     print("   • Downloaded and processed Kaggle IT Service tickets")
     print("   • Split into train/val/test (70/15/15) with stratification")
     print("   • GPT augmentation added ONLY to training set")
     print("   • Validation and test sets remain clean (no augmentation)")
     print("   • This prevents data leakage and ensures valid evaluation")
     
-    print("\n🎯 Next Steps:")
+    print("\n Next Steps:")
     print("   1. Train baseline model:")
     print("      python3 src/train.py --model baseline")
     print("\n   2. Train DistilBERT model (on Colab with GPU):")
@@ -494,14 +494,14 @@ def main():
     setup_environment()
     
     print("\n" + "="*100)
-    print(" 🚀 END-TO-END DATA PIPELINE")
+    print("  END-TO-END DATA PIPELINE")
     print("="*100)
     
     # Show API key status
     status = check_secrets()
-    print(f"\n🔐 API Keys Status:")
-    print(f"   OpenAI:  {'✅ Configured' if status['openai_ok'] else '❌ Not configured'}")
-    print(f"   Kaggle:  {'✅ Configured' if status['kaggle_ok'] else '❌ Not configured'}")
+    print(f"\n API Keys Status:")
+    print(f"   OpenAI:  {' Configured' if status['openai_ok'] else ' Not configured'}")
+    print(f"   Kaggle:  {' Configured' if status['kaggle_ok'] else ' Not configured'}")
     
     print(f"\nConfiguration:")
     print(f"   GPT tickets per category: {args.gpt_count}")
@@ -513,7 +513,7 @@ def main():
     
     # Check if using existing processed data
     if args.use_existing:
-        print_section("Using Existing Processed Data", "📂")
+        print_section("Using Existing Processed Data", "")
         
         required_files = [
             'data/processed/train.csv',
@@ -524,20 +524,20 @@ def main():
         
         missing = [f for f in required_files if not os.path.exists(f)]
         if missing:
-            print("❌ Missing required files:")
+            print(" Missing required files:")
             for f in missing:
                 print(f"   - {f}")
-            print("\n💡 Run without --use-existing to generate fresh data")
+            print("\n Run without --use-existing to generate fresh data")
             return 1
         
         import pandas as pd
-        print("✅ All required files found:")
+        print(" All required files found:")
         for f in required_files:
             if f.endswith('.csv'):
                 df = pd.read_csv(f)
-                print(f"   ✅ {f}: {len(df):,} tickets")
+                print(f"    {f}: {len(df):,} tickets")
             else:
-                print(f"   ✅ {f}")
+                print(f"    {f}")
         
         print_summary(args, start_time)
         return 0
@@ -545,25 +545,25 @@ def main():
     # Step 1: Download IT tickets
     if not args.skip_download:
         if not download_kaggle_data():
-            print("\n⚠️  Download failed, but continuing with existing data...")
+            print("\n  Download failed, but continuing with existing data...")
     else:
-        print_section("Step 1: Skipped (using existing data)", "⏭️")
+        print_section("Step 1: Skipped (using existing data)", "")
     
     # Step 2: Process IT tickets
     if not process_it_tickets():
-        print("\n❌ Failed to process IT tickets. Exiting.")
+        print("\n Failed to process IT tickets. Exiting.")
         return 1
     
     # Step 3: Generate GPT augmentation (before splitting - we'll add it to train later)
     if not args.skip_gpt:
         if not generate_gpt_augmentation(args.gpt_count):
-            print("\n⚠️  GPT augmentation failed, but continuing without it...")
+            print("\n  GPT augmentation failed, but continuing without it...")
     else:
-        print_section("Step 3: Skipped (no GPT augmentation)", "⏭️")
+        print_section("Step 3: Skipped (no GPT augmentation)", "")
     
     # Step 4: Split data and add augmentation to train set only
     if not merge_and_preprocess():
-        print("\n❌ Failed to split and augment data. Exiting.")
+        print("\n Failed to split and augment data. Exiting.")
         return 1
     
     # Print summary

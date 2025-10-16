@@ -39,12 +39,12 @@ def workflow_example():
     
     # Check if model exists locally
     if not os.path.exists(LOCAL_MODEL_DIR):
-        print(f"\n⚠️  Warning: Local model not found at {LOCAL_MODEL_DIR}")
+        print(f"\n  Warning: Local model not found at {LOCAL_MODEL_DIR}")
         print("   Please train the model first using:")
         print("   python src/models/train_distilbert.py")
         return
     
-    print(f"✅ Local model found")
+    print(f" Local model found")
     
     # ========================================
     # STEP 2: Push to Hugging Face (DEMO ONLY - NOT EXECUTED)
@@ -171,14 +171,14 @@ def handle_new_ticket(ticket_text):
     print("="*70)
     
     benefits = [
-        "🌍 Accessible from anywhere - no need to copy model files",
-        "🔄 Version control - track model improvements over time",
-        "👥 Easy sharing - share with team or community",
-        "📊 Model cards - automatic documentation",
-        "🚀 Simple deployment - works with any Transformers-compatible platform",
-        "💾 Free hosting - no infrastructure costs",
-        "🔍 Discoverability - others can find and use your model",
-        "🔒 Private repos - keep proprietary models secure"
+        " Accessible from anywhere - no need to copy model files",
+        " Version control - track model improvements over time",
+        " Easy sharing - share with team or community",
+        " Model cards - automatic documentation",
+        " Simple deployment - works with any Transformers-compatible platform",
+        " Free hosting - no infrastructure costs",
+        " Discoverability - others can find and use your model",
+        " Private repos - keep proprietary models secure"
     ]
     
     for benefit in benefits:

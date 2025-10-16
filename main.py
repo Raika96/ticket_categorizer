@@ -72,11 +72,11 @@ def main():
     else:
         print(f"   Workers: {args.workers}")
     
-    print(f"\n📚 API Documentation:")
+    print(f"\n API Documentation:")
     print(f"   Swagger UI: http://{args.host}:{args.port}/docs")
     print(f"   ReDoc: http://{args.host}:{args.port}/redoc")
     
-    print(f"\n🔗 API Endpoints:")
+    print(f"\n API Endpoints:")
     print(f"   Health: http://{args.host}:{args.port}/health")
     print(f"   Classify: http://{args.host}:{args.port}/classify")
     print(f"   Stats: http://{args.host}:{args.port}/stats")

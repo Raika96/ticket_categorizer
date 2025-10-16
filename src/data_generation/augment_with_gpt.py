@@ -59,13 +59,13 @@ def main():
     # Check API key
     api_key = os.environ.get('OPENAI_API_KEY')
     if not api_key:
-        print("❌ OPENAI_API_KEY not set")
+        print("Error: OPENAI_API_KEY not set")
         return 1
     
     client = OpenAI(api_key=api_key)
     
     total = len(RARE_CATEGORIES) * args.count
-    print(f"🤖 Generating {total} tickets ({args.count} per category)")
+    print(f"Generating {total} tickets ({args.count} per category)")
     
     if not args.yes:
         confirm = input(f"This will cost ~${total * 0.002:.2f}. Continue? [y/N]: ")
@@ -76,7 +76,7 @@ def main():
     # Generate tickets
     all_tickets = []
     for category in RARE_CATEGORIES:
-        print(f"\n📝 Generating {args.count} for {category}...")
+        print(f"\nGenerating {args.count} for {category}...")
         
         for i in range(args.count):
             ticket = generate_ticket(category, client)
@@ -85,7 +85,7 @@ def main():
                 if (i + 1) % 20 == 0:
                     print(f"   Progress: {i+1}/{args.count}")
         
-        print(f"   ✅ Generated {len([t for t in all_tickets if t['category'] == category])} tickets")
+        print(f"   Generated {len([t for t in all_tickets if t['category'] == category])} tickets")
     
     # Save
     df = pd.DataFrame(all_tickets)
@@ -93,8 +93,8 @@ def main():
     output_file = 'data/synthetic_gpt_augmentation.csv'
     df.to_csv(output_file, index=False)
     
-    print(f"\n✅ Saved {len(df)} tickets to: {output_file}")
-    print(f"\n📊 Distribution:")
+    print(f"\nSaved {len(df)} tickets to: {output_file}")
+    print(f"\nDistribution:")
     for cat, count in df['category'].value_counts().items():
         print(f"   {cat}: {count}")
     

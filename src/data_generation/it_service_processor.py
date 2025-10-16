@@ -198,7 +198,7 @@ class ITServiceTicketProcessor:
         print(f"{'='*70}")
         
         if not os.path.exists(filepath):
-            print(f"❌ File not found: {filepath}")
+            print(f"Error: File not found: {filepath}")
             print(f"\nTo download:")
             print("1. Visit: https://www.kaggle.com/datasets/adisongoh/it-service-ticket-classification-dataset")
             print("2. Download the dataset")
@@ -208,7 +208,7 @@ class ITServiceTicketProcessor:
             print("unzip it-service-ticket-classification-dataset.zip -d data/external/")
             return pd.DataFrame()
         
-        print(f"📁 Loading from: {filepath}")
+        print(f"Loading from: {filepath}")
         
         # Load dataset
         if max_samples:
@@ -216,11 +216,11 @@ class ITServiceTicketProcessor:
         else:
             df = pd.read_csv(filepath)
         
-        print(f"✓ Loaded {len(df)} rows")
-        print(f"📋 Columns: {list(df.columns)}")
+        print(f"Loaded {len(df)} rows")
+        print(f"Columns: {list(df.columns)}")
         
         # Display first few rows to understand structure
-        print(f"\n📊 Sample data:")
+        print(f"\nSample data:")
         print(df.head(2))
         
         # Auto-detect columns
@@ -229,19 +229,19 @@ class ITServiceTicketProcessor:
         category_col = self._detect_column(df, ['category', 'type', 'ticket_type', 'classification', 'class', 'topic_group'])
         priority_col = self._detect_column(df, ['priority', 'severity', 'urgency'])
         
-        print(f"\n🔍 Detected columns:")
+        print(f"\nDetected columns:")
         print(f"   Title: {title_col}")
         print(f"   Description: {desc_col}")
         print(f"   Category: {category_col}")
         print(f"   Priority: {priority_col}")
         
         if category_col:
-            print(f"\n📊 Original categories in dataset:")
+            print(f"\nOriginal categories in dataset:")
             print(df[category_col].value_counts())
         
         # Process tickets
         tickets = []
-        print(f"\n⚙️  Processing tickets...")
+        print(f"\nProcessing tickets...")
         
         for idx, row in tqdm(df.iterrows(), total=len(df)):
             title = str(row[title_col]) if title_col and not pd.isna(row[title_col]) else ""
@@ -291,18 +291,18 @@ class ITServiceTicketProcessor:
         
         result_df = pd.DataFrame(tickets)
         
-        print(f"\n✅ Processed {len(result_df)} tickets")
+        print(f"\nProcessed {len(result_df)} tickets")
         
         if len(result_df) > 0 and 'category' in result_df.columns:
-            print(f"\n📊 Category distribution (mapped to our 9 categories):")
+            print(f"\nCategory distribution (mapped to our 9 categories):")
             print(result_df['category'].value_counts())
         else:
-            print(f"\n⚠️  Warning: No tickets processed or 'category' column missing")
+            print(f"\nWarning: No tickets processed or 'category' column missing")
             if len(result_df) > 0:
                 print(f"   Available columns: {list(result_df.columns)}")
         
         if 'original_category' in result_df.columns:
-            print(f"\n🔄 Category mapping summary:")
+            print(f"\nCategory mapping summary:")
             mapping_df = result_df.groupby(['original_category', 'category']).size().reset_index(name='count')
             for _, row in mapping_df.iterrows():
                 print(f"   {row['original_category']} → {row['category']} ({row['count']} tickets)")
@@ -353,11 +353,11 @@ def generate_dataset_from_it_service(output_dir='data/raw', max_samples=None):
         csv_files = [f for f in os.listdir('data/external') if f.endswith('.csv')]
         if csv_files:
             filepath = os.path.join('data/external', csv_files[0])
-            print(f"⚠️  Using first CSV file found: {filepath}")
+            print(f"Warning: Using first CSV file found: {filepath}")
     
     if not filepath:
-        print("❌ No dataset file found!")
-        print("\n📥 To download the IT Service Ticket dataset:")
+        print("Error: No dataset file found!")
+        print("\nTo download the IT Service Ticket dataset:")
         print("="*70)
         print("\nOption 1: Kaggle CLI")
         print("  kaggle datasets download -d adisongoh/it-service-ticket-classification-dataset")
@@ -379,13 +379,13 @@ def generate_dataset_from_it_service(output_dir='data/raw', max_samples=None):
     output_path = 'data/processed_it_tickets.csv'
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
     df.to_csv(output_path, index=False)
-    print(f"\n✅ Dataset saved to: {output_path}")
+    print(f"\nDataset saved to: {output_path}")
     
     # Also save to the raw directory for reference
     os.makedirs(output_dir, exist_ok=True)
     raw_path = os.path.join(output_dir, 'support_tickets_it_service.csv')
     df.to_csv(raw_path, index=False)
-    print(f"✅ Copy saved to: {raw_path}")
+    print(f"Copy saved to: {raw_path}")
     
     # Statistics
     print(f"\n{'='*70}")
@@ -425,7 +425,7 @@ def generate_dataset_from_it_service(output_dir='data/raw', max_samples=None):
     metadata_path = os.path.join(output_dir, 'it_service_metadata.json')
     with open(metadata_path, 'w') as f:
         json.dump(metadata, f, indent=2)
-    print(f"✅ Metadata saved to: {metadata_path}")
+    print(f"Metadata saved to: {metadata_path}")
     
     print(f"\n{'='*70}")
     print(" SUCCESS! Ready for model training")

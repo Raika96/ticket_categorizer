@@ -28,7 +28,7 @@ from collections import Counter, defaultdict
 def load_model(model_dir, model_type='baseline'):
     """Load trained model"""
     print(f"\n{'='*70}")
-    print(f"📦 Loading {model_type.upper()} model from {model_dir}...")
+    print(f" Loading {model_type.upper()} model from {model_dir}...")
     print(f"{'='*70}")
     
     if model_type == 'baseline':
@@ -38,7 +38,7 @@ def load_model(model_dir, model_type='baseline'):
         with open(os.path.join(model_dir, 'config.json'), 'r') as f:
             config = json.load(f)
         
-        print("✅ Baseline model loaded successfully")
+        print(" Baseline model loaded successfully")
         return model, vectorizer, config
     
     elif model_type == 'distilbert':
@@ -54,7 +54,7 @@ def load_model(model_dir, model_type='baseline'):
         with open(config_path, 'r') as f:
             config = json.load(f)
         
-        print("✅ DistilBERT model loaded successfully")
+        print(" DistilBERT model loaded successfully")
         return model, tokenizer, config
     
     else:
@@ -129,14 +129,14 @@ def compute_comprehensive_metrics(y_true, y_pred, y_proba, label_mapping, confid
         metrics['accuracy_low_confidence'] = None
     
     # Print summary
-    print(f"\n📊 Overall Metrics:")
+    print(f"\n Overall Metrics:")
     print(f"   Accuracy: {metrics['accuracy']:.4f}")
     print(f"   Balanced Accuracy: {metrics['balanced_accuracy']:.4f}")
     print(f"   F1-Score (weighted): {metrics['f1_weighted']:.4f}")
     print(f"   F1-Score (macro): {metrics['f1_macro']:.4f}")
     print(f"   Cohen's Kappa: {metrics['cohen_kappa']:.4f}")
     
-    print(f"\n🎯 Confidence Analysis:")
+    print(f"\n Confidence Analysis:")
     print(f"   Mean confidence: {metrics['mean_confidence']:.4f}")
     print(f"   High confidence (≥{confidence_threshold}): {metrics['n_high_confidence']} ({metrics['high_confidence_rate']*100:.2f}%)")
     print(f"   Low confidence (<{confidence_threshold}): {metrics['n_low_confidence']} ({(1-metrics['high_confidence_rate'])*100:.2f}%)")
@@ -169,7 +169,7 @@ def generate_classification_report(y_true, y_pred, label_mapping):
 
 def plot_confusion_matrix(y_true, y_pred, label_mapping, output_dir, split_name='val'):
     """Plot detailed confusion matrix"""
-    print(f"\n📊 Generating confusion matrix...")
+    print(f"\n Generating confusion matrix...")
     
     cm = confusion_matrix(y_true, y_pred)
     cm_normalized = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
@@ -202,7 +202,7 @@ def plot_confusion_matrix(y_true, y_pred, label_mapping, output_dir, split_name=
     
     output_path = os.path.join(output_dir, f'confusion_matrix_{split_name}.png')
     plt.savefig(output_path, dpi=300, bbox_inches='tight')
-    print(f"✅ Saved: {output_path}")
+    print(f" Saved: {output_path}")
     plt.close()
     
     return cm, cm_normalized
@@ -219,12 +219,12 @@ def analyze_errors(df, y_true, y_pred, y_proba, label_mapping, output_dir, n_exa
     n_errors = misclassified.sum()
     error_rate = n_errors / len(y_true)
     
-    print(f"\n❌ Total Errors: {n_errors} / {len(y_true)} ({error_rate*100:.2f}%)")
+    print(f"\n Total Errors: {n_errors} / {len(y_true)} ({error_rate*100:.2f}%)")
     
     error_analysis = {}
     
     # 1. Most common misclassification patterns
-    print(f"\n🔍 Most Common Misclassification Patterns:")
+    print(f"\n Most Common Misclassification Patterns:")
     misclass_patterns = []
     for true_label, pred_label in zip(y_true[misclassified], y_pred[misclassified]):
         true_cat = label_mapping['id_to_category'][str(true_label)]
@@ -246,7 +246,7 @@ def analyze_errors(df, y_true, y_pred, y_proba, label_mapping, output_dir, n_exa
         })
     
     # 2. Error rate by category
-    print(f"\n📊 Error Rate by Category:")
+    print(f"\n Error Rate by Category:")
     category_errors = defaultdict(lambda: {'total': 0, 'errors': 0})
     
     for i, (true_label, pred_label) in enumerate(zip(y_true, y_pred)):
@@ -271,7 +271,7 @@ def analyze_errors(df, y_true, y_pred, y_proba, label_mapping, output_dir, n_exa
     error_confidences = y_proba.max(axis=1)[misclassified]
     correct_confidences = y_proba.max(axis=1)[~misclassified]
     
-    print(f"\n🎯 Confidence Distribution:")
+    print(f"\n Confidence Distribution:")
     print(f"   Errors - Mean confidence: {error_confidences.mean():.4f} (±{error_confidences.std():.4f})")
     print(f"   Correct - Mean confidence: {correct_confidences.mean():.4f} (±{correct_confidences.std():.4f})")
     
@@ -283,7 +283,7 @@ def analyze_errors(df, y_true, y_pred, y_proba, label_mapping, output_dir, n_exa
     }
     
     # 4. Save example errors
-    print(f"\n📝 Saving {min(n_examples, n_errors)} Error Examples...")
+    print(f"\n Saving {min(n_examples, n_errors)} Error Examples...")
     
     error_df = df[misclassified].copy()
     error_df['true_label'] = y_true[misclassified]
@@ -305,7 +305,7 @@ def analyze_errors(df, y_true, y_pred, y_proba, label_mapping, output_dir, n_exa
     
     error_file = os.path.join(output_dir, 'error_examples.csv')
     error_examples.to_csv(error_file, index=False)
-    print(f"✅ Saved error examples: {error_file}")
+    print(f" Saved error examples: {error_file}")
     
     # 5. Plot confidence distributions
     plot_confidence_analysis(correct_confidences, error_confidences, output_dir)
@@ -337,7 +337,7 @@ def plot_confidence_analysis(correct_conf, error_conf, output_dir):
     plt.tight_layout()
     output_path = os.path.join(output_dir, 'confidence_analysis.png')
     plt.savefig(output_path, dpi=300, bbox_inches='tight')
-    print(f"✅ Saved confidence analysis: {output_path}")
+    print(f" Saved confidence analysis: {output_path}")
     plt.close()
 
 
@@ -383,7 +383,7 @@ def generate_summary_report(metrics, error_analysis, output_dir):
                f"avg confidence (vs {error_analysis['confidence_analysis']['correct_mean_confidence']:.2f} for correct)\n")
         f.write(f"  - Strong agreement between model and ground truth (Kappa: {metrics['cohen_kappa']:.4f})\n")
     
-    print(f"\n✅ Saved evaluation summary: {report_path}")
+    print(f"\n Saved evaluation summary: {report_path}")
 
 
 def main():
@@ -408,7 +408,7 @@ def main():
     # Override data path if using test set
     if args.use_test_set:
         args.data_path = 'data/processed/test.csv'
-        print("\n⚠️  WARNING: Using TEST SET for final evaluation!")
+        print("\n  WARNING: Using TEST SET for final evaluation!")
         print("This should only be done ONCE after all development is complete.\n")
     
     # Create output directory
@@ -429,18 +429,18 @@ def main():
     model, preprocessor, config = load_model(args.model_dir, args.model_type)
     
     print(f"\n{'='*70}")
-    print(f"📊 Loading data from {args.data_path}...")
+    print(f" Loading data from {args.data_path}...")
     print(f"{'='*70}")
     df, label_mapping = load_data(args.data_path, args.label_mapping)
-    print(f"✅ Data loaded: {len(df)} samples, {len(label_mapping['id_to_category'])} classes")
+    print(f" Data loaded: {len(df)} samples, {len(label_mapping['id_to_category'])} classes")
     
     split_name = 'test' if args.use_test_set else 'val'
     print(f"\n{'='*70}")
-    print(f"🔍 Evaluating on {split_name.upper()} set: {len(df)} samples")
+    print(f" Evaluating on {split_name.upper()} set: {len(df)} samples")
     print(f"{'='*70}")
     
     # Transform and predict
-    print("\n⚙️  Making predictions...")
+    print("\n  Making predictions...")
     
     if args.model_type == 'baseline':
         # TF-IDF + Logistic Regression
@@ -457,12 +457,12 @@ def main():
         
         tokenizer = preprocessor
         device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-        print(f"🖥️  Using device: {device}")
+        print(f"  Using device: {device}")
         model.to(device)
         model.eval()
         
         # Tokenize
-        print(f"📝 Tokenizing {len(df)} samples...")
+        print(f" Tokenizing {len(df)} samples...")
         encodings = tokenizer(
             df['text_clean'].tolist(),
             max_length=128,
@@ -470,7 +470,7 @@ def main():
             truncation=True,
             return_tensors='pt'
         )
-        print(f"✅ Tokenization complete")
+        print(f" Tokenization complete")
         
         # Create dataset and dataloader
         dataset = TensorDataset(
@@ -479,13 +479,13 @@ def main():
         )
         batch_size = 32
         dataloader = DataLoader(dataset, batch_size=batch_size)
-        print(f"📦 Created dataloader with batch_size={batch_size} ({len(dataloader)} batches)")
+        print(f" Created dataloader with batch_size={batch_size} ({len(dataloader)} batches)")
         
         # Predict
         all_preds = []
         all_probs = []
         
-        print(f"🔄 Running inference...")
+        print(f" Running inference...")
         with torch.no_grad():
             for batch_idx, batch in enumerate(tqdm(dataloader, desc="Evaluating", unit="batch")):
                 input_ids, attention_mask = [b.to(device) for b in batch]
@@ -505,9 +505,9 @@ def main():
         y_true = df['label'].values
         y_pred = np.array(all_preds)
         y_proba = np.array(all_probs)
-        print(f"✅ Inference complete! Processed {len(y_pred)} samples")
+        print(f" Inference complete! Processed {len(y_pred)} samples")
     
-    print("\n✅ Predictions complete")
+    print("\n Predictions complete")
     
     # Compute metrics
     metrics = compute_comprehensive_metrics(
@@ -540,26 +540,26 @@ def main():
     results_file = os.path.join(args.output_dir, f'evaluation_results_{split_name}.json')
     with open(results_file, 'w') as f:
         json.dump(results, f, indent=2)
-    print(f"\n✅ Saved complete results: {results_file}")
+    print(f"\n Saved complete results: {results_file}")
     
     # Save classification report
     report_file = os.path.join(args.output_dir, f'classification_report_{split_name}.txt')
     with open(report_file, 'w') as f:
         f.write(report_str)
-    print(f"✅ Saved classification report: {report_file}")
+    print(f" Saved classification report: {report_file}")
     
     print("\n" + "="*70)
-    print(" EVALUATION COMPLETE ✅")
+    print(" EVALUATION COMPLETE ")
     print("="*70)
     
     elapsed_time = time.time() - start_time
-    print(f"\n⏱️  Total evaluation time: {elapsed_time:.1f} seconds ({elapsed_time/60:.1f} minutes)")
+    print(f"\n  Total evaluation time: {elapsed_time:.1f} seconds ({elapsed_time/60:.1f} minutes)")
     
-    print(f"\n📊 Key Results:")
+    print(f"\n Key Results:")
     print(f"   Accuracy: {metrics['accuracy']:.4f}")
     print(f"   F1-Score: {metrics['f1_weighted']:.4f}")
     print(f"   Auto-assignment Rate: {metrics['high_confidence_rate']*100:.2f}%")
-    print(f"\n📁 All results saved to: {args.output_dir}")
+    print(f"\n All results saved to: {args.output_dir}")
 
 
 if __name__ == "__main__":

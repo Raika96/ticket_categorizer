@@ -247,7 +247,7 @@ class TextCleaner:
         """
         df = df.copy()
         
-        print(f"\n🧹 Cleaning text in columns: {text_columns}")
+        print(f"\n Cleaning text in columns: {text_columns}")
         print(f"   Min length: {self.min_length} chars")
         print(f"   Max length: {self.max_length} chars")
         print(f"   PII redaction: {'Enabled' if self.redact_pii_flag else 'Disabled'}")

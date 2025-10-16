@@ -117,7 +117,17 @@ python3 src/train.py --model distilbert --epochs 3 --batch_size 16 --seed 42
 --seed 42                      # Random seed for reproducibility
 ```
 
-### 3. Model Evaluation
+### 3. Load Pre-trained Model from Hugging Face
+
+Download the pre-trained model from Hugging Face Hub to your local directory:
+
+```bash
+python3 src/models/load_from_huggingface.py --save-local models/distilbert/final
+```
+
+For more details on using the model, see [HUGGINGFACE_GUIDE.md](HUGGINGFACE_GUIDE.md).
+
+### 4. Model Evaluation
 
 Evaluate models on validation or test sets with comprehensive metrics and error analysis.
 
@@ -147,7 +157,7 @@ python3 src/evaluate.py --model_type distilbert --model_dir models/distilbert/fi
 - `experiments/evaluation_results_test.json`: Detailed metrics
 - `experiments/classification_report_test.txt`: Per-class performance
 
-### 4. Command-Line Inference
+### 5. Command-Line Inference
 
 Classify tickets directly from the command line without running the full API server.
 
@@ -161,16 +171,6 @@ echo '{"title": "Refund request", "description": "Want my money back"}' | python
 # Use baseline model or compact output
 python3 src/infer.py --model baseline --compact '{"title": "Bug report", "description": "App crashes"}'
 ```
-
-### 5. Load Pre-trained Model from Hugging Face
-
-Download the pre-trained model from Hugging Face Hub to your local directory:
-
-```bash
-python3 src/models/load_from_huggingface.py --save-local models/distilbert/final
-```
-
-For more details on using the model, see [HUGGINGFACE_GUIDE.md](HUGGINGFACE_GUIDE.md).
 
 ### 6. API Server
 

@@ -125,8 +125,6 @@ Download the pre-trained model from Hugging Face Hub to your local directory:
 python3 src/models/load_from_huggingface.py --save-local models/distilbert/final
 ```
 
-For more details on using the model, see [HUGGINGFACE_GUIDE.md](HUGGINGFACE_GUIDE.md).
-
 ### 4. Model Evaluation
 
 Evaluate models on validation or test sets with comprehensive metrics and error analysis.
@@ -337,7 +335,6 @@ Predictions below the confidence threshold (default: 0.6 for baseline, 0.5 for D
 **Hugging Face Integration:**
 - `src/models/push_to_huggingface.py`: Upload model to Hugging Face Hub
 - `src/models/load_from_huggingface.py`: Load model from Hugging Face Hub
-- See [HUGGINGFACE_GUIDE.md](HUGGINGFACE_GUIDE.md) for details
 
 ## Project Structure
 
@@ -374,7 +371,6 @@ TicketCat/
 ├── main.py                           # API entry point
 ├── load_secrets.py                   # API key management
 ├── requirements.txt                  # Python dependencies
-├── HUGGINGFACE_GUIDE.md             # HF Hub integration guide
 └── README.md                         # This file
 ```
 

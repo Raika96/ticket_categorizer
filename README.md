@@ -366,8 +366,6 @@ TicketCat/
 │   ├── baseline/                     # Baseline model artifacts
 │   └── distilbert/                   # DistilBERT model artifacts
 ├── experiments/                      # Evaluation results
-├── examples/
-│   └── huggingface_workflow_example.py  # HF integration example
 ├── main.py                           # API entry point
 ├── load_secrets.py                   # API key management
 ├── requirements.txt                  # Python dependencies

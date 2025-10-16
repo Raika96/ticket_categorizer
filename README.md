@@ -422,7 +422,6 @@ TicketCat/
 
 **Operations:**
 - **Dynamic Thresholds**: Allow per-category or adaptive confidence thresholds
-- **Helpdesk Integration**: Build connectors for Zendesk, Jira, Freshdesk for automatic classification
 - **Review Dashboard**: Web UI for agents to review and correct low-confidence predictions
 
 ---

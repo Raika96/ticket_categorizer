@@ -13,9 +13,9 @@ ENV/
 .ipynb_checkpoints
 
 # Models and data
-models/
-data/
-logs/
+/models/
+/data/
+/logs/
 *.joblib
 *.pkl
 *.h5

@@ -81,7 +81,7 @@ python3 src/train.py --model baseline --confidence_threshold 0.6 --seed 42
 ```
 
 **Training Process:**
-- Vectorizes text using TF-IDF (max 5000 features)
+- Vectorizes text using TF-IDF (max 10,000 features)
 - Trains Logistic Regression with balanced class weights
 - Validates on validation set
 - Saves model to `models/baseline/`

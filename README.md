@@ -28,8 +28,6 @@ Both models support confidence thresholding to flag uncertain predictions for ma
 # Install dependencies
 pip install -r requirements.txt
 
-# Configure API keys (optional, for data generation)
-cp secrets.json.example secrets.json
 # Edit secrets.json with your OpenAI and Kaggle API keys
 ```
 

@@ -117,9 +117,10 @@ def predict_ticket(ticket_data: Dict, model_dict: Dict) -> Dict:
         device = model_dict['device']
         
         # Tokenize
+        max_length = config.get('max_length', 128)
         inputs = tokenizer(
             cleaned_text,
-            max_length=512,
+            max_length=max_length,
             padding='max_length',
             truncation=True,
             return_tensors='pt'

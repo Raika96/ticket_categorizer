@@ -157,8 +157,10 @@ async def startup_event():
     """Load model on startup"""
     logger.info("Starting Support Ticket Classification API...")
     try:
-        # Preload default model (DistilBERT)
-        get_model('distilbert')
+        # Preload default model (check environment variable or use DistilBERT)
+        default_model = os.environ.get('DEFAULT_MODEL', 'distilbert')
+        logger.info(f"Loading default model: {default_model}")
+        get_model(default_model)
         logger.info("API ready!")
     except Exception as e:
         logger.error(f"Startup failed: {e}")

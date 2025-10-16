@@ -151,11 +151,14 @@ python3 src/evaluate.py --model_type distilbert --model_dir models/distilbert/fi
 6. Saves results to `experiments/`
 
 **Output Files:**
-- `experiments/confusion_matrix_test.png`: Confusion matrix visualization
+- `experiments/confusion_matrix_{split}.png`: Confusion matrix visualization
 - `experiments/confidence_analysis.png`: Confidence distribution plot
 - `experiments/error_examples.csv`: Sample of misclassified tickets
-- `experiments/evaluation_results_test.json`: Detailed metrics
-- `experiments/classification_report_test.txt`: Per-class performance
+- `experiments/evaluation_results_{split}.json`: Detailed metrics
+- `experiments/classification_report_{split}.txt`: Per-class performance
+- `experiments/evaluation_summary.txt`: Human-readable evaluation summary
+
+*Note: `{split}` is either `val` or `test` depending on which dataset was evaluated.*
 
 ### 5. Command-Line Inference
 

@@ -45,7 +45,7 @@ python3 src/setup_and_augment_data.py
 
 # Options:
 # --use-existing: Reuse existing processed data
-# --gpt-tickets-per-label: Number of synthetic tickets per rare category (default: 20)
+# --gpt-count: Number of synthetic tickets per rare category (default: 20)
 ```
 
 **Pipeline Steps:**
@@ -68,7 +68,7 @@ To address class imbalance, we use GPT-3.5-Turbo to generate synthetic training 
 
 **Key Points:**
 - Applied only to 4 rare categories: Security & Compliance, Performance Problems, Integration Issues, General Inquiries
-- Default: 20 synthetic tickets per rare category (configurable via `--gpt-tickets-per-label`)
+- Default: 20 synthetic tickets per rare category (configurable via `--gpt-count`)
 - Synthetic data added **only to training set** after the initial train/val/test split to prevent data leakage
 - Generated tickets are cached and reused to avoid redundant API calls
 

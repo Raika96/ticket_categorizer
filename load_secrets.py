@@ -54,7 +54,7 @@ def load_secrets(secrets_file='secrets.json'):
                     secrets['kaggle']['key'] = file_secrets['kaggle']['key']
                     
         except (json.JSONDecodeError, KeyError) as e:
-            print(f"⚠️  Warning: Could not parse {secrets_file}: {e}")
+            print(f"Warning: Could not parse {secrets_file}: {e}")
     
     # Fallback to environment variables
     if not secrets['openai']['api_key']:
@@ -76,7 +76,7 @@ def load_secrets(secrets_file='secrets.json'):
                 secrets['kaggle']['username'] = kaggle_creds.get('username')
                 secrets['kaggle']['key'] = kaggle_creds.get('key')
             except (json.JSONDecodeError, KeyError) as e:
-                print(f"⚠️  Warning: Could not parse {kaggle_json}: {e}")
+                print(f"Warning: Could not parse {kaggle_json}: {e}")
     
     return secrets
 
@@ -137,28 +137,28 @@ def check_secrets():
 
 if __name__ == '__main__':
     """Test the secrets loading"""
-    print("🔐 Checking API Keys Configuration\n")
+    print("Checking API Keys Configuration\n")
     
     status = check_secrets()
     
     print("OpenAI API:")
     if status['openai_ok']:
-        print(f"  ✅ Configured: {status['openai_key']}")
+        print(f"  Configured: {status['openai_key']}")
     else:
-        print("  ❌ Not configured")
+        print("  Not configured")
         print("     Set in secrets.json or export OPENAI_API_KEY")
     
     print("\nKaggle API:")
     if status['kaggle_ok']:
-        print(f"  ✅ Configured: {status['kaggle_username']}")
+        print(f"  Configured: {status['kaggle_username']}")
     else:
-        print("  ❌ Not configured")
+        print("  Not configured")
         print("     Set in secrets.json or ~/.kaggle/kaggle.json")
     
     print("\n" + "="*70)
     if status['openai_ok'] and status['kaggle_ok']:
-        print("✅ All API keys configured!")
+        print("All API keys configured!")
     else:
-        print("⚠️  Some API keys are missing. See secrets.json.example")
+        print("Warning: Some API keys are missing. See secrets.json.example")
     print("="*70)
 

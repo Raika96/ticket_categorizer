@@ -126,7 +126,7 @@ def main():
             raise ValueError(f"Unknown model: {args.model}")
         
         print(f"\n{'='*70}")
-        print(f" TRAINING COMPLETE ✅")
+        print(f" TRAINING COMPLETE")
         print(f"{'='*70}")
         print(f"Validation F1: {val_metrics['f1_weighted']:.4f}")
         print(f"Validation Acc: {val_metrics['accuracy']:.4f}")
@@ -135,7 +135,7 @@ def main():
         return 0
         
     except Exception as e:
-        print(f"\n❌ Training failed: {e}")
+        print(f"\nError: Training failed: {e}")
         import traceback
         traceback.print_exc()
         return 1

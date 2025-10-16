@@ -61,7 +61,7 @@ def main():
     print("="*70)
     print(" TICKETCAT - SUPPORT TICKET CLASSIFICATION API")
     print("="*70)
-    print(f"\n🚀 Starting API server...")
+    print(f"\nStarting API server...")
     print(f"   Host: {args.host}")
     print(f"   Port: {args.port}")
     print(f"   Mode: {'Production' if args.prod else 'Development'}")

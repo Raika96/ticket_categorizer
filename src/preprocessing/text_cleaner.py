@@ -279,7 +279,7 @@ class TextCleaner:
     
     def print_stats(self):
         """Print cleaning statistics"""
-        print(f"\n📊 Cleaning Statistics:")
+        print(f"\nCleaning Statistics:")
         print(f"   Total processed: {self.stats['total_processed']:,}")
         print(f"   Too short (< {self.min_length}): {self.stats['too_short']:,}")
         print(f"   Too long (> {self.max_length}): {self.stats['too_long']:,}")
@@ -287,7 +287,7 @@ class TextCleaner:
         print(f"   Empty after cleaning: {self.stats['empty_after_cleaning']:,}")
         
         if self.redact_pii_flag:
-            print(f"\n🔒 PII Redaction Statistics:")
+            print(f"\nPII Redaction Statistics:")
             for pii_type, count in self.stats['pii_redacted'].items():
                 if count > 0:
                     print(f"   {pii_type}: {count:,} instances")
@@ -296,7 +296,7 @@ class TextCleaner:
             if total_pii > 0:
                 print(f"   Total PII redacted: {total_pii:,} instances")
             else:
-                print(f"   ✅ No PII detected")
+                print(f"   No PII detected")
     
     def get_stats(self) -> Dict:
         """Get cleaning statistics"""
@@ -325,12 +325,12 @@ def handle_duplicates(df: pd.DataFrame,
     duplicates_removed = initial_count - len(df_dedup)
     
     if duplicates_removed > 0:
-        print(f"\n🔄 Duplicate Handling:")
+        print(f"\nDuplicate Handling:")
         print(f"   Found {duplicates_removed:,} duplicate tickets")
         print(f"   Removed duplicates, keeping '{keep}' occurrence")
         print(f"   Remaining tickets: {len(df_dedup):,}")
     else:
-        print(f"\n✅ No duplicate tickets found")
+        print(f"\nNo duplicate tickets found")
     
     return df_dedup, duplicates_removed
 
@@ -376,7 +376,7 @@ def handle_extreme_cases(df: pd.DataFrame,
     }
     
     if removed > 0:
-        print(f"\n⚠️  Extreme Case Handling:")
+        print(f"\nWarning: Extreme Case Handling:")
         print(f"   Length thresholds: {min_threshold:.0f} - {max_threshold:.0f} chars")
         print(f"   Too short (< {min_percentile}th percentile): {stats['too_short']:,}")
         print(f"   Too long (> {max_percentile}th percentile): {stats['too_long']:,}")

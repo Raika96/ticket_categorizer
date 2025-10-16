@@ -134,9 +134,9 @@ def get_model(model_type='baseline'):
                 MODEL_CACHE[model_type] = load_distilbert_model()
             else:
                 raise ValueError(f"Unknown model type: {model_type}")
-            logger.info(f"✅ {model_type} model loaded successfully")
+            logger.info(f"{model_type} model loaded successfully")
         except Exception as e:
-            logger.error(f"❌ Failed to load {model_type} model: {e}")
+            logger.error(f"Failed to load {model_type} model: {e}")
             raise HTTPException(status_code=500, detail=f"Failed to load model: {e}")
     
     return MODEL_CACHE[model_type]
@@ -159,9 +159,9 @@ async def startup_event():
     try:
         # Preload default model (DistilBERT)
         get_model('distilbert')
-        logger.info("✅ API ready!")
+        logger.info("API ready!")
     except Exception as e:
-        logger.error(f"❌ Startup failed: {e}")
+        logger.error(f"Startup failed: {e}")
 
 
 @app.get("/", tags=["General"])

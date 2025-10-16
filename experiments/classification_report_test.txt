@@ -1,0 +1,15 @@
+                                  precision    recall  f1-score   support
+
+   Account Access / Login Issues     0.9273    0.9412    0.9342      2059
+              Billing & Payments     0.8655    0.8635    0.8645       447
+            Bug / Defect Reports     0.9250    0.9274    0.9262      1171
+                Feature Requests     0.9359    0.8988    0.9169       909
+       General Inquiries / Other     0.9570    0.9776    0.9672      1251
+How-To / Product Usage Questions     0.8750    0.8838    0.8794       697
+              Integration Issues     0.9172    0.7956    0.8521       181
+            Performance Problems     0.9291    0.9088    0.9188       274
+           Security & Compliance     0.8913    0.8723    0.8817        47
+
+                        accuracy                         0.9238      7036
+                       macro avg     0.9137    0.8966    0.9046      7036
+                    weighted avg     0.9238    0.9238    0.9236      7036

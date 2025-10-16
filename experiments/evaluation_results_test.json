@@ -1,0 +1,221 @@
+{
+  "timestamp": "2025-10-16T14:06:20.750854",
+  "split": "test",
+  "n_samples": 7036,
+  "overall_metrics": {
+    "accuracy": 0.923820352472996,
+    "balanced_accuracy": 0.8965617620361408,
+    "f1_weighted": 0.9235865940042277,
+    "f1_macro": 0.9045599067088609,
+    "f1_micro": 0.9238203524729961,
+    "precision_weighted": 0.923756573633559,
+    "precision_macro": 0.9136899813119932,
+    "recall_weighted": 0.923820352472996,
+    "recall_macro": 0.8965617620361408,
+    "cohen_kappa": 0.9072042710932423,
+    "matthews_corrcoef": 0.9072463941197232,
+    "mean_confidence": 0.9686698913574219,
+    "median_confidence": 0.9945996403694153,
+    "confidence_std": 0.08630719780921936,
+    "n_high_confidence": 6896,
+    "n_low_confidence": 140,
+    "high_confidence_rate": 0.9801023308698124,
+    "accuracy_high_confidence": 0.9343097447795824,
+    "accuracy_low_confidence": 0.40714285714285714
+  },
+  "per_class_metrics": {
+    "Account Access / Login Issues": {
+      "precision": 0.9272727272727272,
+      "recall": 0.9412336085478388,
+      "f1-score": 0.9342010122921186,
+      "support": 2059.0
+    },
+    "Billing & Payments": {
+      "precision": 0.8654708520179372,
+      "recall": 0.8635346756152126,
+      "f1-score": 0.8645016797312429,
+      "support": 447.0
+    },
+    "Bug / Defect Reports": {
+      "precision": 0.9250425894378195,
+      "recall": 0.9274124679760888,
+      "f1-score": 0.926226012793177,
+      "support": 1171.0
+    },
+    "Feature Requests": {
+      "precision": 0.9358533791523482,
+      "recall": 0.8987898789878987,
+      "f1-score": 0.9169472502805837,
+      "support": 909.0
+    },
+    "General Inquiries / Other": {
+      "precision": 0.956964006259781,
+      "recall": 0.9776179056754596,
+      "f1-score": 0.9671807038355081,
+      "support": 1251.0
+    },
+    "How-To / Product Usage Questions": {
+      "precision": 0.875,
+      "recall": 0.8837876614060258,
+      "f1-score": 0.8793718772305497,
+      "support": 697.0
+    },
+    "Integration Issues": {
+      "precision": 0.9171974522292994,
+      "recall": 0.7955801104972375,
+      "f1-score": 0.8520710059171598,
+      "support": 181.0
+    },
+    "Performance Problems": {
+      "precision": 0.9291044776119403,
+      "recall": 0.9087591240875912,
+      "f1-score": 0.9188191881918818,
+      "support": 274.0
+    },
+    "Security & Compliance": {
+      "precision": 0.8913043478260869,
+      "recall": 0.8723404255319149,
+      "f1-score": 0.8817204301075269,
+      "support": 47.0
+    },
+    "accuracy": 0.923820352472996,
+    "macro avg": {
+      "precision": 0.9136899813119932,
+      "recall": 0.8965617620361408,
+      "f1-score": 0.9045599067088609,
+      "support": 7036.0
+    },
+    "weighted avg": {
+      "precision": 0.923756573633559,
+      "recall": 0.923820352472996,
+      "f1-score": 0.9235865940042277,
+      "support": 7036.0
+    }
+  },
+  "error_analysis": {
+    "top_misclassification_patterns": [
+      {
+        "true_category": "Bug / Defect Reports",
+        "predicted_category": "Account Access / Login Issues",
+        "count": 42,
+        "percentage": 7.835820895522389
+      },
+      {
+        "true_category": "Feature Requests",
+        "predicted_category": "Account Access / Login Issues",
+        "count": 30,
+        "percentage": 5.597014925373134
+      },
+      {
+        "true_category": "How-To / Product Usage Questions",
+        "predicted_category": "Account Access / Login Issues",
+        "count": 28,
+        "percentage": 5.223880597014925
+      },
+      {
+        "true_category": "Billing & Payments",
+        "predicted_category": "Account Access / Login Issues",
+        "count": 26,
+        "percentage": 4.850746268656716
+      },
+      {
+        "true_category": "Account Access / Login Issues",
+        "predicted_category": "Feature Requests",
+        "count": 26,
+        "percentage": 4.850746268656716
+      },
+      {
+        "true_category": "How-To / Product Usage Questions",
+        "predicted_category": "Bug / Defect Reports",
+        "count": 26,
+        "percentage": 4.850746268656716
+      },
+      {
+        "true_category": "Account Access / Login Issues",
+        "predicted_category": "Bug / Defect Reports",
+        "count": 24,
+        "percentage": 4.477611940298507
+      },
+      {
+        "true_category": "Account Access / Login Issues",
+        "predicted_category": "General Inquiries / Other",
+        "count": 23,
+        "percentage": 4.291044776119403
+      },
+      {
+        "true_category": "Account Access / Login Issues",
+        "predicted_category": "How-To / Product Usage Questions",
+        "count": 23,
+        "percentage": 4.291044776119403
+      },
+      {
+        "true_category": "Feature Requests",
+        "predicted_category": "Bug / Defect Reports",
+        "count": 20,
+        "percentage": 3.731343283582089
+      }
+    ],
+    "category_error_rates": [
+      {
+        "category": "Account Access / Login Issues",
+        "errors": 121,
+        "total": 2059,
+        "error_rate": 0.05876639145216124
+      },
+      {
+        "category": "Billing & Payments",
+        "errors": 61,
+        "total": 447,
+        "error_rate": 0.13646532438478748
+      },
+      {
+        "category": "Bug / Defect Reports",
+        "errors": 85,
+        "total": 1171,
+        "error_rate": 0.07258753202391119
+      },
+      {
+        "category": "Feature Requests",
+        "errors": 92,
+        "total": 909,
+        "error_rate": 0.10121012101210121
+      },
+      {
+        "category": "General Inquiries / Other",
+        "errors": 28,
+        "total": 1251,
+        "error_rate": 0.02238209432454037
+      },
+      {
+        "category": "How-To / Product Usage Questions",
+        "errors": 81,
+        "total": 697,
+        "error_rate": 0.11621233859397417
+      },
+      {
+        "category": "Integration Issues",
+        "errors": 37,
+        "total": 181,
+        "error_rate": 0.20441988950276244
+      },
+      {
+        "category": "Performance Problems",
+        "errors": 25,
+        "total": 274,
+        "error_rate": 0.09124087591240876
+      },
+      {
+        "category": "Security & Compliance",
+        "errors": 6,
+        "total": 47,
+        "error_rate": 0.1276595744680851
+      }
+    ],
+    "confidence_analysis": {
+      "errors_mean_confidence": 0.8358455896377563,
+      "errors_std_confidence": 0.17823979258537292,
+      "correct_mean_confidence": 0.9796227216720581,
+      "correct_std_confidence": 0.062198471277952194
+    }
+  }
+}

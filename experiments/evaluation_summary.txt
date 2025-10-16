@@ -1,0 +1,33 @@
+======================================================================
+ MODEL EVALUATION SUMMARY
+======================================================================
+
+Evaluation Date: 2025-10-16 14:43:39
+
+OVERALL METRICS:
+  Accuracy: 0.9260
+  Balanced Accuracy: 0.8807
+  F1-Score (weighted): 0.9255
+  F1-Score (macro): 0.8916
+  Precision (weighted): 0.9258
+  Recall (weighted): 0.9260
+  Cohen's Kappa: 0.9098
+
+CONFIDENCE ANALYSIS:
+  Mean confidence: 0.9661
+  High confidence rate: 97.80%
+  Accuracy (high conf): 0.9374
+  Accuracy (low conf): 0.4194
+
+TOP MISCLASSIFICATION PATTERNS:
+  Account Access / Login Issues → Bug / Defect Reports: 33 (6.33%)
+  How-To / Product Usage Questions → Account Access / Login Issues: 31 (5.95%)
+  Account Access / Login Issues → How-To / Product Usage Questions: 27 (5.18%)
+  Bug / Defect Reports → Account Access / Login Issues: 25 (4.80%)
+  Feature Requests → How-To / Product Usage Questions: 25 (4.80%)
+
+KEY INSIGHTS:
+  - Model correctly classifies 92.60% of tickets
+  - 97.80% can be auto-assigned with high confidence
+  - Errors have 0.82 avg confidence (vs 0.98 for correct)
+  - Strong agreement between model and ground truth (Kappa: 0.9098)

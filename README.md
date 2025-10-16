@@ -405,7 +405,7 @@ TicketCat/
 ## Future Improvements
 
 **Model Enhancements:**
-- **Additional Data Sources**: Integrate real-world support data to improve generalization and edge case coverage
+- Integrate more real-world support data to improve generalization and edge case coverage
 - **Advanced Architectures**: Explore RoBERTa, DeBERTa, or domain-adapted LLMs for higher accuracy on overlapping categories
 - **Multilingual Support**: Fine-tune multilingual models (XLM-Roberta) or add translation pipelines for non-English tickets
 - **Explainability**: Integrate LIME/SHAP or attention visualization to explain predictions

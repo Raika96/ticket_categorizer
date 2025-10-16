@@ -149,7 +149,22 @@ python3 src/evaluate.py --model_type distilbert --model_dir models/distilbert/fi
 - `experiments/evaluation_results_test.json`: Detailed metrics
 - `experiments/classification_report_test.txt`: Per-class performance
 
-### 4. Load Pre-trained Model from Hugging Face
+### 4. Command-Line Inference
+
+Classify tickets directly from the command line without running the full API server.
+
+```bash
+# Quick prediction
+python3 src/infer.py '{"title": "Cannot login", "description": "Password not working"}'
+
+# From stdin
+echo '{"title": "Refund request", "description": "Want my money back"}' | python3 src/infer.py
+
+# Use baseline model or compact output
+python3 src/infer.py --model baseline --compact '{"title": "Bug report", "description": "App crashes"}'
+```
+
+### 5. Load Pre-trained Model from Hugging Face
 
 Download the pre-trained model from Hugging Face Hub to your local directory:
 
@@ -159,7 +174,7 @@ python3 src/models/load_from_huggingface.py --save-local models/distilbert/final
 
 For more details on using the model, see [HUGGINGFACE_GUIDE.md](HUGGINGFACE_GUIDE.md).
 
-### 5. API Server
+### 6. API Server
 
 Run the classification API for real-time predictions.
 
